@@ -55,14 +55,15 @@
       <SetupUILanguage>
         <UILanguage>en-US</UILanguage>
       </SetupUILanguage>
-      <SystemLocale>en-US</SystemLocale>
+      <SystemLocale>zh-CN</SystemLocale>
       <UILanguage>en-US</UILanguage>
-      <UserLocale>en-US</UserLocale>
+      <UserLocale>zh-CN</UserLocale>
     </component>
   </settings>
   <settings pass="specialize">
     <component name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
       <ComputerName>@VM_NAME@</ComputerName>
+      <TimeZone>China Standard Time</TimeZone>
     </component>
     <component name="Microsoft-Windows-Deployment" processorArchitecture="x86" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
       <RunSynchronous>
@@ -127,10 +128,10 @@
               <Value>@ADMINPASSWORD@</Value>
               <PlainText>true</PlainText>
             </Password>
-            <Description>testadmin</Description>
-            <DisplayName>testadmin</DisplayName>
+            <Description>Local Administrator created by unattended install</Description>
+            <DisplayName>LocalAdmin</DisplayName>
             <Group>Administrators;Power Users</Group>
-            <Name>testadmin</Name>
+            <Name>localadmin</Name>
           </LocalAccount>
         </LocalAccounts>
       </UserAccounts>
@@ -140,7 +141,7 @@
           <PlainText>true</PlainText>
         </Password>
         <Enabled>true</Enabled>
-        <LogonCount>999</LogonCount>
+        <LogonCount>50</LogonCount>
         <Username>@ADMINNAME@</Username>
       </AutoLogon>
       <FirstLogonCommands>

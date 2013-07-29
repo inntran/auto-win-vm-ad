@@ -1,5 +1,5 @@
 #!/bin/sh
-
+SAFEADMINPASSWORD=$ADMINPASSWORD
 # lots of parameters to set or override
 VM_IMG_DIR=${VM_IMG_DIR:-/vmguest/infra_win}
 ANS_FLOPPY=${ANS_FLOPPY:-/vmguest/testbed/answerfloppy.vfd}
@@ -9,7 +9,7 @@ ANS_FILE_DIR=${ANS_FILE_DIR:-/share/auto-win-vm-ad/answerfiles}
 WIN_ISO=${WIN_ISO:-/vmguest/isoimage/7601.17514.101119-1850_x64fre_server_eval_en-us-GRMSXEVAL_EN_DVD.iso}
 # windows server needs lots of ram, cpu, disk
 # size in MB
-VM_RAM=${VM_RAM:-4096}
+VM_RAM=${VM_RAM:-8192}
 VM_CPUS=${VM_CPUS:-4}
 # size in GB
 VM_DISKSIZE=${VM_DISKSIZE:-40}
@@ -22,6 +22,7 @@ SETUP_PATH=${SETUP_PATH:-"E:"}
 do_subst()
 {
     $SUDOCMD sed -e "s/@ADMINPASSWORD@/$ADMINPASSWORD/g" \
+        -e "s/@SAFEADMINPASSWORD@/$SAFEADMINPASSWORD/g"
         -e "s/@DOMAINNAME@/$VM_AD_DOMAIN/g" \
         -e "s/@ADMINNAME@/$ADMINNAME/g" \
         -e "s/@VM_AD_DOMAIN@/$VM_AD_DOMAIN/g" \
@@ -145,11 +146,11 @@ serialpath=/tmp/serial-`date +'%Y%m%d%H%M%S'`.$$
 
 $SUDOCMD virt-install --cpu=host\
     --name "$VM_NAME" --ram=$VM_RAM --vcpu=$VM_CPUS \
-    --cdrom $WIN_ISO --vnc --os-variant=win2k8 \
+    --cdrom $WIN_ISO --memballoon none --graphics=vnc --os-variant=win2k8 \
     --serial file,path=$serialpath --serial pty \
     --disk path=$WIN_VM_DISKFILE,bus=ide,size=$VM_DISKSIZE,format=raw,cache=none \
-    $VI_FLOPPY $VI_EXTRAS_CD \
-    --network=bridge=shadow0,model=e1000 \
+    $VI_FLOPPY $VI_EXTRAS_CD --disk /vmguest/isoimage/virtio-win-0.1-65.iso,device=cdrom,perms=ro\
+    --network=bridge=shadow0,model=virtio \
     $VI_DEBUG --noautoconsole || { echo error $? from virt-install ; exit 1 ; }
 
 echo now we wait for everything to be set up

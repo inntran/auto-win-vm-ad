@@ -13,5 +13,5 @@ CreateDNSDelegation=No
 DatabasePath="C:\Windows\NTDS"
 LogPath="C:\Windows\NTDS"
 SYSVOLPath="C:\Windows\SYSVOL"
-SafeModeAdminPassword=@ADMINPASSWORD@
+SafeModeAdminPassword=@SAFEADMINPASSWORD@
 RebootOnCompletion=No
