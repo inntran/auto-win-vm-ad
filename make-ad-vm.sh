@@ -1,5 +1,6 @@
 #!/bin/sh
 SAFEADMINPASSWORD=$ADMINPASSWORD
+USE_FLOPPY=1
 # lots of parameters to set or override
 VM_IMG_DIR=${VM_IMG_DIR:-/vmguest/infra_win}
 ANS_FLOPPY=${ANS_FLOPPY:-/vmguest/testbed/answerfloppy.vfd}
@@ -149,8 +150,8 @@ $SUDOCMD virt-install --cpu=host\
     --cdrom $WIN_ISO --memballoon none --graphics=vnc --os-variant=win2k8 \
     --serial file,path=$serialpath --serial pty \
     --disk path=$WIN_VM_DISKFILE,bus=ide,size=$VM_DISKSIZE,format=raw,cache=none \
-    $VI_FLOPPY $VI_EXTRAS_CD --disk /vmguest/isoimage/virtio-win-0.1-65.iso,device=cdrom,perms=ro \
-    --network=bridge=shadow0,model=virtio \
+    $VI_FLOPPY $VI_EXTRAS_CD \
+    --network=bridge=shadow0,model=e1000 \
     $VI_DEBUG --noautoconsole || { echo error $? from virt-install ; exit 1 ; }
 
 echo now we wait for everything to be set up
