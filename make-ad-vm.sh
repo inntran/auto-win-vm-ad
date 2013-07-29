@@ -32,6 +32,8 @@ do_subst()
         -e "s/@SETUP_PATH@/$SETUP_PATH/g" \
         -e "s/@AD_FOREST_LEVEL@/$AD_FOREST_LEVEL/g" \
         -e "s/@AD_DOMAIN_LEVEL@/$AD_DOMAIN_LEVEL/g" \
+        -e "s/@VM_IP@/$VM_IP/g" \
+        -e "s/@VM_ROUTER@/$VM_ROUTER/g" \
         $1
 }
 
@@ -43,12 +45,9 @@ fi
 
 if [ -z "$VM_FQDN" ] ; then
     # try to get the ip addr from virsh
-    VM_IP=`$SUDOCMD virsh net-dumpxml default | grep "'"$VM_NAME"'"|sed "s/^.*ip='\([^']*\)'.*$/\1/"`
+    VM_IP=`$SUDOCMD getent hosts | grep "'"$VM_NAME"'"|awk '{print $1}'`
     if [ -z "$VM_IP" ] ; then
-        echo Error: your machine $VM_NAME has no IP address in virsh net-dumpxml default
-        echo Please use virsh net-edit default to specify the IP address for $VM_NAME
-        echo or set VM_FQDN=full.host.domain in the environment
-        exit 1
+        echo Error: your machine $VM_NAME has no IP address in /etc/hosts
     fi
     VM_FQDN=`getent hosts $VM_IP|awk '{print $2}'`
     echo using hostname $VM_FQDN for $VM_NAME with IP address $VM_IP
