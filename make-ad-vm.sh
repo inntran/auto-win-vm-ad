@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # lots of parameters to set or override
-VM_IMG_DIR=${VM_IMG_DIR:-/vmguest/win_infra}
+VM_IMG_DIR=${VM_IMG_DIR:-/vmguest/infra_win}
 ANS_FLOPPY=${ANS_FLOPPY:-/vmguest/testbed/answerfloppy.vfd}
 FLOPPY_MNT=${FLOPPY_MNT:-/mnt/floppy}
 WIN_VER_REL_ARCH=${WIN_VER_REL_ARCH:-win2k8x8664}
