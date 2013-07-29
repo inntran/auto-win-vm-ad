@@ -6,7 +6,7 @@ ANS_FLOPPY=${ANS_FLOPPY:-/vmguest/testbed/answerfloppy.vfd}
 FLOPPY_MNT=${FLOPPY_MNT:-/mnt/floppy}
 WIN_VER_REL_ARCH=${WIN_VER_REL_ARCH:-win2k8x8664}
 ANS_FILE_DIR=${ANS_FILE_DIR:-/share/auto-win-vm-ad/answerfiles}
-WIN_ISO=${WIN_ISO:-/vmguest/isoimages/7601.17514.101119-1850_x64fre_server_eval_en-us-GRMSXEVAL_EN_DVD.iso}
+WIN_ISO=${WIN_ISO:-/vmguest/isoimage/7601.17514.101119-1850_x64fre_server_eval_en-us-GRMSXEVAL_EN_DVD.iso}
 # windows server needs lots of ram, cpu, disk
 # size in MB
 VM_RAM=${VM_RAM:-4096}
