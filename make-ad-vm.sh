@@ -1,19 +1,18 @@
 #!/bin/sh
 
 # lots of parameters to set or override
-VM_IMG_DIR=${VM_IMG_DIR:-/var/lib/libvirt/images}
-ANS_FLOPPY=${ANS_FLOPPY:-$VM_IMG_DIR/answerfloppy.vfd}
+VM_IMG_DIR=${VM_IMG_DIR:-/vmguest/win_infra}
+ANS_FLOPPY=${ANS_FLOPPY:-/vmguest/testbed/answerfloppy.vfd}
 FLOPPY_MNT=${FLOPPY_MNT:-/mnt/floppy}
 WIN_VER_REL_ARCH=${WIN_VER_REL_ARCH:-win2k8x8664}
 ANS_FILE_DIR=${ANS_FILE_DIR:-/share/auto-win-vm-ad/answerfiles}
-PRODUCT_KEY_FILE=${PRODUCT_KEY_FILE:-$ANS_FILE_DIR/$WIN_VER_REL_ARCH.key}
-WIN_ISO=${WIN_ISO:-$VM_IMG_DIR/en_windows_server_2008_r2_standard_enterprise_datacenter_web_x64_dvd_x15-50365.iso}
+WIN_ISO=${WIN_ISO:-/vmguest/isoimages/7601.17514.101119-1850_x64fre_server_eval_en-us-GRMSXEVAL_EN_DVD.iso}
 # windows server needs lots of ram, cpu, disk
 # size in MB
-VM_RAM=${VM_RAM:-2048}
-VM_CPUS=${VM_CPUS:-2}
+VM_RAM=${VM_RAM:-4096}
+VM_CPUS=${VM_CPUS:-4}
 # size in GB
-VM_DISKSIZE=${VM_DISKSIZE:-16}
+VM_DISKSIZE=${VM_DISKSIZE:-40}
 VM_NAME=${VM_NAME:-ad}
 WIN_VM_DISKFILE=${WIN_VM_DISKFILE:-$VM_IMG_DIR/$VM_NAME.raw}
 ADMINNAME=${ADMINNAME:-Administrator}
@@ -30,7 +29,6 @@ do_subst()
         -e "s/@VM_NAME@/$VM_NAME/g" \
         -e "s/@VM_FQDN@/$VM_FQDN/g" \
         -e "s/@VM_AD_SUFFIX@/$VM_AD_SUFFIX/g" \
-        -e "s/@PRODUCT_KEY@/$PRODUCT_KEY/g" \
         -e "s/@SETUP_PATH@/$SETUP_PATH/g" \
         -e "s/@AD_FOREST_LEVEL@/$AD_FOREST_LEVEL/g" \
         -e "s/@AD_DOMAIN_LEVEL@/$AD_DOMAIN_LEVEL/g" \
@@ -41,21 +39,6 @@ if [ -z "$ADMINPASSWORD" ] ; then
     echo Error: you must supply the password for $ADMINNAME
     echo in the ADMINPASSWORD environment variable
     exit 1
-fi
-
-if [ -z "$PRODUCT_KEY" -a -f $PRODUCT_KEY_FILE ] ; then
-    read PRODUCT_KEY < $PRODUCT_KEY_FILE
-fi
-
-if [ -z "$VM_MAC" ] ; then
-    # try to get the mac addr from virsh
-    VM_MAC=`$SUDOCMD virsh net-dumpxml default | grep "'"$VM_NAME"'"|sed "s/^.*mac='\([^']*\)'.*$/\1/"`
-    if [ -z "$VM_MAC" ] ; then
-        echo Error: your machine $VM_MAC has no mac address in virsh net-dumpxml default
-        echo Please use virsh net-edit default to specify the mac address for $VM_MAC
-        echo or set VM_MAC=mac:addr in the environment
-        exit 1
-    fi
 fi
 
 if [ -z "$VM_FQDN" ] ; then
@@ -118,8 +101,8 @@ if [ -n "$USE_FLOPPY" ] ; then
             *) outfile=$FLOPPY_MNT/`basename $file .in` ;;
         esac
         case $file in
-            *.in) do_subst $file | $SUDOCMD sed 's/$//' > $outfile || err=$? ;;
-            *) $SUDOCMD sed 's/$//' $file > $outfile || err=$? ;;
+            *.in) do_subst $file | $SUDOCMD unix2dos > $outfile || err=$? ;;
+            *) $SUDOCMD sed 's/$/^M/' $file > $outfile || err=$? ;;
         esac
         if [ -n "$err" ] ; then
             echo error $err copying $file to $outfile  ; $SUDOCMD umount $FLOPPY_MNT ; exit 1
@@ -143,8 +126,10 @@ else
             *) outfile=$staging/`basename $file .in` ;;
         esac
         case $file in
-            *.in) do_subst $file | $SUDOCMD sed 's/$//' > $outfile || err=$? ;;
-            *.vbs|*.cmd|*.txt|*.inf|*.ini|*.xml) $SUDOCMD sed 's/$//' $file > $outfile || err=$? ;;
+            *.in) do_subst $file | $SUDOCMD sed 's/$/
+/' > $outfile || err=$? ;;
+            *.vbs|*.cmd|*.txt|*.inf|*.ini|*.xml) $SUDOCMD sed 's/$/
+/' $file > $outfile || err=$? ;;
             # just assume everything else is binary or we don't want to convert it
             *) $SUDOCMD cp -p $file $outfile || err=$? ;;
         esac
@@ -158,18 +143,18 @@ else
     if [ -z "$VI_DEBUG" ] ; then
         rm -rf $staging
     fi
-    VI_EXTRAS_CD="--disk path=$EXTRAS_CD_ISO,device=cdrom"
+    VI_EXTRAS_CD="--disk path=$EXTRAS_CD_ISO,device=cdrom,perms=ro"
 fi
 
 serialpath=/tmp/serial-`date +'%Y%m%d%H%M%S'`.$$
 
-$SUDOCMD virt-install --connect=qemu:///system --hvm \
-    --accelerate --name "$VM_NAME" --ram=$VM_RAM --vcpu=$VM_CPUS \
-    --cdrom $WIN_ISO --vnc --os-type windows  \
+$SUDOCMD virt-install --cpu=host\
+    --name "$VM_NAME" --ram=$VM_RAM --vcpu=$VM_CPUS \
+    --cdrom $WIN_ISO --vnc --os-type winserv --os-variant=win2k8 \
     --serial file,path=$serialpath --serial pty \
     --disk path=$WIN_VM_DISKFILE,bus=ide,size=$VM_DISKSIZE,format=raw,cache=none \
     $VI_FLOPPY $VI_EXTRAS_CD \
-    --network=bridge=virbr0,model=rtl8139,mac=$VM_MAC \
+    --network=bridge=shadow0,model=e1000 \
     $VI_DEBUG --noautoconsole || { echo error $? from virt-install ; exit 1 ; }
 
 echo now we wait for everything to be set up
