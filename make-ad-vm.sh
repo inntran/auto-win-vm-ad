@@ -22,7 +22,7 @@ SETUP_PATH=${SETUP_PATH:-"E:"}
 do_subst()
 {
     $SUDOCMD sed -e "s/@ADMINPASSWORD@/$ADMINPASSWORD/g" \
-        -e "s/@SAFEADMINPASSWORD@/$SAFEADMINPASSWORD/g"
+        -e "s/@SAFEADMINPASSWORD@/$SAFEADMINPASSWORD/g" \
         -e "s/@DOMAINNAME@/$VM_AD_DOMAIN/g" \
         -e "s/@ADMINNAME@/$ADMINNAME/g" \
         -e "s/@VM_AD_DOMAIN@/$VM_AD_DOMAIN/g" \
@@ -149,7 +149,7 @@ $SUDOCMD virt-install --cpu=host\
     --cdrom $WIN_ISO --memballoon none --graphics=vnc --os-variant=win2k8 \
     --serial file,path=$serialpath --serial pty \
     --disk path=$WIN_VM_DISKFILE,bus=ide,size=$VM_DISKSIZE,format=raw,cache=none \
-    $VI_FLOPPY $VI_EXTRAS_CD --disk /vmguest/isoimage/virtio-win-0.1-65.iso,device=cdrom,perms=ro\
+    $VI_FLOPPY $VI_EXTRAS_CD --disk /vmguest/isoimage/virtio-win-0.1-65.iso,device=cdrom,perms=ro \
     --network=bridge=shadow0,model=virtio \
     $VI_DEBUG --noautoconsole || { echo error $? from virt-install ; exit 1 ; }
 
