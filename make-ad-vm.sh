@@ -102,7 +102,7 @@ if [ -n "$USE_FLOPPY" ] ; then
         esac
         case $file in
             *.in) do_subst $file | $SUDOCMD unix2dos > $outfile || err=$? ;;
-            *) $SUDOCMD sed 's/$/^M/' $file > $outfile || err=$? ;;
+            *) $SUDOCMD unix2dos -n $file $outfile || err=$? ;;
         esac
         if [ -n "$err" ] ; then
             echo error $err copying $file to $outfile  ; $SUDOCMD umount $FLOPPY_MNT ; exit 1
@@ -126,10 +126,8 @@ else
             *) outfile=$staging/`basename $file .in` ;;
         esac
         case $file in
-            *.in) do_subst $file | $SUDOCMD sed 's/$/
-/' > $outfile || err=$? ;;
-            *.vbs|*.cmd|*.txt|*.inf|*.ini|*.xml) $SUDOCMD sed 's/$/
-/' $file > $outfile || err=$? ;;
+            *.in) do_subst $file | $SUDOCMD unix2dos > $outfile || err=$? ;;
+            *.vbs|*.cmd|*.txt|*.inf|*.ini|*.xml) $SUDOCMD unix2dos -n $file $outfile || err=$? ;;
             # just assume everything else is binary or we don't want to convert it
             *) $SUDOCMD cp -p $file $outfile || err=$? ;;
         esac
