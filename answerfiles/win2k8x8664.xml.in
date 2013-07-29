@@ -31,8 +31,8 @@
         <OSImage>
           <InstallFrom>
             <MetaData wcm:action="add">
-              <Key>/IMAGE/INDEX</Key>
-              <Value>1</Value>
+              <Key>/IMAGE/NAME</Key>
+              <Value>Windows Server 2008 R2 SERVERENTERPRISE</Value>
             </MetaData>
           </InstallFrom>
           <InstallTo>
