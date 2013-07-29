@@ -43,15 +43,13 @@ if [ -z "$ADMINPASSWORD" ] ; then
     exit 1
 fi
 
-if [ -z "$VM_FQDN" ] ; then
-    # try to get the ip addr from virsh
-    VM_IP=`$SUDOCMD getent hosts | grep "'"$VM_NAME"'"|awk '{print $1}'`
-    if [ -z "$VM_IP" ] ; then
-        echo Error: your machine $VM_NAME has no IP address in /etc/hosts
-    fi
-    VM_FQDN=`getent hosts $VM_IP|awk '{print $2}'`
-    echo using hostname $VM_FQDN for $VM_NAME with IP address $VM_IP
+VM_IP=`$SUDOCMD getent hosts | grep "'"$VM_NAME"'"|awk '{print $1}'`
+if [ -z "$VM_IP" ] ; then
+  echo Error: your machine $VM_NAME has no IP address in /etc/hosts
+  exit 1
 fi
+VM_FQDN=`getent hosts $VM_IP|awk '{print $2}'`
+echo using hostname $VM_FQDN for $VM_NAME with IP address $VM_IP
 
 # now that we have the fqdn, construct our suffix
 lmhn=`echo $VM_FQDN | sed -e 's/^\([^.]*\).*$/\1/'`
