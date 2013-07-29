@@ -148,7 +148,7 @@ serialpath=/tmp/serial-`date +'%Y%m%d%H%M%S'`.$$
 
 $SUDOCMD virt-install --cpu=host\
     --name "$VM_NAME" --ram=$VM_RAM --vcpu=$VM_CPUS \
-    --cdrom $WIN_ISO --vnc --os-type winserv --os-variant=win2k8 \
+    --cdrom $WIN_ISO --vnc --os-variant=win2k8 \
     --serial file,path=$serialpath --serial pty \
     --disk path=$WIN_VM_DISKFILE,bus=ide,size=$VM_DISKSIZE,format=raw,cache=none \
     $VI_FLOPPY $VI_EXTRAS_CD \
