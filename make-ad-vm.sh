@@ -152,9 +152,9 @@ $SUDOCMD virt-install --cpu=host\
     --cdrom $WIN_ISO --memballoon none --graphics=vnc --os-variant=win2k8 \
     --serial file,path=$serialpath --serial pty \
     --disk path=$WIN_VM_DISKFILE,bus=ide,size=$VM_DISKSIZE,format=raw,cache=none \
-    $VI_FLOPPY $VI_EXTRAS_CD --disk /vmguest/isoimage/virtio-win-0.1-52.iso,device=cdrom,perms=ro \
     --disk /vmguest/testbed/virtio_disk.img,bus=virtio,size=1,sparse=true,format=raw \
-    --disk path=$WIN_VM_DCDATA_DISKFILE,bus=virtio,size=$DCDATA_DISKSIZE,sparse=true,format=raw
+    --disk path=$WIN_VM_DCDATA_DISKFILE,bus=virtio,size=$DCDATA_DISKSIZE,sparse=true,format=raw \
+    $VI_FLOPPY $VI_EXTRAS_CD --disk /vmguest/isoimage/virtio-win-0.1-52.iso,device=cdrom,perms=ro \
     --network=bridge=shadow0,model=e1000 \
     $VI_DEBUG --noautoconsole || { echo error $? from virt-install ; exit 1 ; }
 
