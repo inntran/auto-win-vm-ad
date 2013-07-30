@@ -13,9 +13,11 @@ WIN_ISO=${WIN_ISO:-/vmguest/isoimage/7601.17514.101119-1850_x64fre_server_eval_e
 VM_RAM=${VM_RAM:-8192}
 VM_CPUS=${VM_CPUS:-4}
 # size in GB
-VM_DISKSIZE=${VM_DISKSIZE:-40}
+VM_DISKSIZE=${VM_DISKSIZE:-64}
+DCDATA_DISKSIZE=${DCDATA_DISKSIZE:-32}
 VM_NAME=${VM_NAME:-ad}
 WIN_VM_DISKFILE=${WIN_VM_DISKFILE:-$VM_IMG_DIR/$VM_NAME.raw}
+WIN_VM_DCDATA_DISKFILE=${WIN_VM_DCDATA_DISKFILE:-$VM_IMG_DIR/$VM_NAME.AD_DATA.raw}
 ADMINNAME=${ADMINNAME:-Administrator}
 SETUP_PATH=${SETUP_PATH:-"A:"}
 
@@ -150,7 +152,9 @@ $SUDOCMD virt-install --cpu=host\
     --cdrom $WIN_ISO --memballoon none --graphics=vnc --os-variant=win2k8 \
     --serial file,path=$serialpath --serial pty \
     --disk path=$WIN_VM_DISKFILE,bus=ide,size=$VM_DISKSIZE,format=raw,cache=none \
-    $VI_FLOPPY $VI_EXTRAS_CD \
+    $VI_FLOPPY $VI_EXTRAS_CD --disk /vmguest/isoimage/virtio-win-0.1-52.iso,device=cdrom,perms=ro \
+    --disk /vmguest/testbed/virtio_disk.img,bus=virtio,size=1,sparse=true,format=raw \
+    --disk path=$WIN_VM_DCDATA_DISKFILE,bus=virtio,size=$DCDATA_DISKSIZE,sparse=true,format=raw
     --network=bridge=shadow0,model=e1000 \
     $VI_DEBUG --noautoconsole || { echo error $? from virt-install ; exit 1 ; }
 

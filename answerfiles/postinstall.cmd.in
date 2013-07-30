@@ -2,4 +2,4 @@ echo these are commands to be run upon first login post installation
 rem echo activate windows with the product key
 rem cscript c:\Windows\System32\slmgr.vbs /ipk "@PRODUCT_KEY@"
 rem cscript c:\Windows\System32\slmgr.vbs /ato
-@SETUP_PATH@\nextscript.cmd 1
+@SETUP_PATH@\nextscript.cmd 1 "Reboot to start Active Directory setup"
