@@ -47,7 +47,7 @@ if [ -z "$ADMINPASSWORD" ] ; then
     exit 1
 fi
 
-VM_IP=`$SUDOCMD getent hosts | grep $VM_NAME|awk '{print $1}'`
+VM_IP=`$SUDOCMD getent hosts | grep -v localhost | grep -v ipv6 | grep $VM_NAME|awk '{print $1}'`
 if [ -z "$VM_IP" ] ; then
   echo Error: your machine $VM_NAME has no IP address in /etc/hosts
   exit 1
