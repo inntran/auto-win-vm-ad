@@ -1,0 +1,4 @@
+# To be included in common.inc
+VM_AD_DOMAIN=""
+ADDS_ADMIN_PASSWORD=""
+ADDS_SAFEADMIN_PASSWORD=""
