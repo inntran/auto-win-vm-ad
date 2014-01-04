@@ -22,10 +22,9 @@ if DEFINED reboot (
         reg add HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\RunOnce /v SetupPass%idx% /t REG_SZ /d "cmd /c %nextscript% > c:\setuppass%idx%.log 2>&1"
     )
     echo %reboot%
-    echo Shutdown to change VM configuration or press any key for auto-reboot
     pause
-    shutdown -r -f -t 30 -c "Shutting down in 30 seconds %reboot%"
-    rem echo reboot in 30 seconds
+    shutdown -r -f -t 60 -c "Shutting down in 1 minute %reboot%"
+    rem echo reboot in 1 minute
 ) else (
     if DEFINED nextscript (
         rem no reboot - just call the next script

@@ -4,27 +4,47 @@
     <component name="Microsoft-Windows-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
       <DiskConfiguration>
         <WillShowUI>OnError</WillShowUI>
-        <Disk>
+        <Disk wcm:action="add">
           <CreatePartitions>
-            <CreatePartition>
+            <CreatePartition wcm:action="add">
               <Order>1</Order>
-              <Size>1</Size>
+              <Extend>true</Extend>
               <Type>Primary</Type>
             </CreatePartition>
           </CreatePartitions>
-          <DiskID>0</DiskID>
-          <WillWipeDisk>true</WillWipeDisk>
           <ModifyPartitions>
-            <ModifyPartition>
+            <ModifyPartition wcm:action="add">
               <Active>true</Active>
-              <Extend>true</Extend>
               <Format>NTFS</Format>
-              <Label>C drive</Label>
+              <Label>SYSTEM</Label>
               <Letter>C</Letter>
               <Order>1</Order>
               <PartitionID>1</PartitionID>
             </ModifyPartition>
           </ModifyPartitions>
+          <DiskID>0</DiskID>
+          <WillWipeDisk>true</WillWipeDisk>
+        </Disk>
+        <Disk wcm:action="add">
+          <CreatePartitions>
+            <CreatePartition wcm:action="add">
+              <Order>1</Order>
+              <Extend>true</Extend>
+              <Type>Primary</Type>
+            </CreatePartition>
+          </CreatePartitions>
+          <ModifyPartitions>
+            <ModifyPartition wcm:action="add">
+              <Active>false</Active>
+              <Format>NTFS</Format>
+              <Label>DATA</Label>
+              <Letter>D</Letter>
+              <Order>1</Order>
+              <PartitionID>1</PartitionID>
+            </ModifyPartition>
+          </ModifyPartitions>
+          <DiskID>1</DiskID>
+          <WillWipeDisk>true</WillWipeDisk>
         </Disk>
       </DiskConfiguration>
       <ImageInstall>
@@ -46,7 +66,7 @@
         <AcceptEula>true</AcceptEula>
       </UserData>
       <Display>
-        <ColorDepth>32</ColorDepth>
+        <ColorDepth>16</ColorDepth>
         <HorizontalResolution>1024</HorizontalResolution>
         <VerticalResolution>768</VerticalResolution>
       </Display>
@@ -109,7 +129,7 @@
     </component> 
     <component name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"> 
       <Display> 
-        <ColorDepth>32</ColorDepth> 
+        <ColorDepth>16</ColorDepth> 
         <HorizontalResolution>1024</HorizontalResolution> 
         <VerticalResolution>768</VerticalResolution> 
       </Display> 
@@ -122,18 +142,6 @@
           <Value>@ADMINPASSWORD@</Value>
           <PlainText>true</PlainText>
         </AdministratorPassword>
-        <LocalAccounts>
-          <LocalAccount wcm:action="add">
-            <Password>
-              <Value>@ADMINPASSWORD@</Value>
-              <PlainText>true</PlainText>
-            </Password>
-            <Description>Local Administrator created by unattended install</Description>
-            <DisplayName>LocalAdmin</DisplayName>
-            <Group>Administrators;Power Users</Group>
-            <Name>localadmin</Name>
-          </LocalAccount>
-        </LocalAccounts>
       </UserAccounts>
       <AutoLogon>
         <Password>
@@ -146,7 +154,7 @@
       </AutoLogon>
       <FirstLogonCommands>
         <SynchronousCommand wcm:action="add">
-          <CommandLine>cmd /c @SETUP_PATH@\postinstall.cmd > c:\postinstall.log 2>&1</CommandLine>
+          <CommandLine>cmd /c @SETUP_PATH@\@FIRSTBOOT_SCRIPT@ > c:\postinstall.log 2>&1</CommandLine>
           <Order>1</Order>
           <Description>Run Post-Install commands</Description>
         </SynchronousCommand>
@@ -157,7 +165,7 @@
         <ProtectYourPC>3</ProtectYourPC>
       </OOBE>
       <Display>
-        <ColorDepth>32</ColorDepth>
+        <ColorDepth>16</ColorDepth>
         <HorizontalResolution>1024</HorizontalResolution>
         <VerticalResolution>768</VerticalResolution>
       </Display>
