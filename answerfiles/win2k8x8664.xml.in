@@ -97,8 +97,13 @@
     <component name="Microsoft-Windows-Deployment" processorArchitecture="x86" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
       <RunSynchronous>
         <RunSynchronousCommand wcm:action="add">
-          <Description>Run Specialization commands</Description>
           <Order>1</Order>
+          <Description>Change Letter</Description>
+          <Path>diskpart /s A:\chdrvltr.txt</Path>
+        </RunSynchronousCommand>
+        <RunSynchronousCommand wcm:action="add">
+          <Description>Run Specialization commands</Description>
+          <Order>2</Order>
           <Path>cmd /c @SETUP_PATH@\specialize.cmd > c:\specialize.log 2>&1</Path>
         </RunSynchronousCommand>
       </RunSynchronous>
