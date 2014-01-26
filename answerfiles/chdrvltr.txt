@@ -2,4 +2,5 @@ select volume 0
 assign letter=h noerr
 select disk 1
 online disk noerr
+attributes disk clear readonly noerr
 exit
