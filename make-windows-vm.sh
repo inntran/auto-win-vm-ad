@@ -40,8 +40,8 @@ fi
 # NETWORK
 case $IFACE_COUNT in
   0) VM_NET="" ;;
-  1) VM_NET="--network=bridge=br0,model=virtio" ;;
-  2) VM_NET="--network=bridge=br0,model=virtio --network=bridge=br1,model=virtio" ;;
+  1) VM_NET="--network=bridge=$VM_NET_INT_BRIDGE,model=virtio" ;;
+  2) VM_NET="--network=bridge=$VM_NET_INT_BRIDGE,model=virtio --network=bridge=$VM_NET_EXT_BRIDGE,model=virtio" ;;
 esac
 
 # DISK
