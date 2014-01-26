@@ -1,5 +1,5 @@
 select volume 0
-assign letter=h
+assign letter=h noerr
 select disk 1
-online disk
+online disk noerr
 exit
