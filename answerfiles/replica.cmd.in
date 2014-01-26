@@ -1,0 +1,2 @@
+echo Setup Secondary Domain Controller
+%SystemRoot%\System32\dcpromo.exe /unattend:@SETUP_PATH@\replica.ini > c:\dcinstall.log 2>&1

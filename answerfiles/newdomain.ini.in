@@ -1,0 +1,17 @@
+[DCINSTALL]
+ConfirmGC=Yes
+CreateDNSDelegation=No
+DatabasePath="D:\NTDS"
+DomainLevel=@AD_DOMAIN_LEVEL@
+DomainNetbiosName=@VM_NETBIOS_NAME@
+ForestLevel=@AD_FOREST_LEVEL@
+InstallDNS=Yes
+LogPath="D:\NTDS"
+NewDomain=Forest
+NewDomainDNSName=@VM_AD_DOMAIN@
+Password=@ADMINPASSWORD@
+RebootOnCompletion=No
+ReplicaOrNewDomain=Domain
+SYSVOLPath="D:\SYSVOL"
+SafeModeAdminPassword=@SAFEADMINPASSWORD@
+UserName=@ADMINNAME@

@@ -1,0 +1,2 @@
+echo Setup First Domain Controller
+%SystemRoot%\System32\dcpromo.exe /unattend:@SETUP_PATH@\newdomain.ini > c:\dcinstall.log 2>&1

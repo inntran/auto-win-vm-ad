@@ -1,0 +1,37 @@
+<package action="configure">
+  <assemblyIdentity name="Microsoft-Windows-Foundation-Package" version="6.1.7601.17514" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="" />
+  <selection name="IIS-ASPNET" state="true" />
+  <selection name="IIS-ApplicationDevelopment" state="true" />
+  <selection name="IIS-BasicAuthentication" state="true" />
+  <selection name="IIS-ClientCertificateMappingAuthentication" state="true" />
+  <selection name="IIS-CommonHttpFeatures" state="true" />
+  <selection name="IIS-DefaultDocument" state="true" />
+  <selection name="IIS-DigestAuthentication" state="true" />
+  <selection name="IIS-HealthAndDiagnostics" state="true" />
+  <selection name="IIS-HttpCompressionDynamic" state="true" />
+  <selection name="IIS-HttpCompressionStatic" state="true" />
+  <selection name="IIS-HttpErrors" state="true" />
+  <selection name="IIS-HttpLogging" state="true" />
+  <selection name="IIS-HttpRedirect" state="true" />
+  <selection name="IIS-HttpTracing" state="true" />
+  <selection name="IIS-IISCertificateMappingAuthentication" state="true" />
+  <selection name="IIS-IPSecurity" state="true" />
+  <selection name="IIS-ISAPIExtensions" state="true" />
+  <selection name="IIS-ISAPIFilter" state="true" />
+  <selection name="IIS-LoggingLibraries" state="true" />
+  <selection name="IIS-ManagementConsole" state="true" />
+  <selection name="IIS-ManagementScriptingTools" state="true" />
+  <selection name="IIS-ManagementService" state="true" />
+  <selection name="IIS-NetFxExtensibility" state="true" />
+  <selection name="IIS-Performance" state="true" />
+  <selection name="IIS-RequestFiltering" state="true" />
+  <selection name="IIS-RequestMonitor" state="true" />
+  <selection name="IIS-Security" state="true" />
+  <selection name="IIS-StaticContent" state="true" />
+  <selection name="IIS-URLAuthorization" state="true" />
+  <selection name="IIS-WebServer" state="true" />
+  <selection name="IIS-WebServerManagementTools" state="true" />
+  <selection name="IIS-WebServerRole" state="true" />
+  <selection name="IIS-WindowsAuthentication" state="true" />
+  <selection name="NetFx3" state="true" />
+</package>
