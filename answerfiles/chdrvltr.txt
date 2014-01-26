@@ -1,3 +1,5 @@
 select volume 0
 assign letter=h
+select disk 1
+online disk
 exit
