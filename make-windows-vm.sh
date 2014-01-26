@@ -45,7 +45,7 @@ case $IFACE_COUNT in
 esac
 
 # DISK
-if [ -z DATA_DISKSIZE ] ; then
+if [ -z $DATA_DISKSIZE ] ; then
   VM_DISKS="--disk path=$WIN_VM_DISKFILE,bus=virtio,size=$VM_DISKSIZE,format=raw"
 else
   VM_DISKS="--disk path=$WIN_VM_DISKFILE,bus=virtio,size=$VM_DISKSIZE,format=raw
@@ -74,6 +74,8 @@ do_subst()
         -e "s/@VM_IP@/$VM_IP/g" \
         -e "s/@VM_ROUTER@/$VM_ROUTER/g" \
         -e "s/@FIRSTBOOT_SCRIPT@/$FIRSTBOOT_SCRIPT/g" \
+        -e "s/@PRIMARY_DNS@/$PRIMARY_DNS/g" \
+        -e "s/@SECONDARY_DNS_STRING@/$SECONDARY_DNS_STRING/g" \
         $1
 }
 

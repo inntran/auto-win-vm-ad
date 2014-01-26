@@ -10,3 +10,11 @@ ADMINPASSWORD=$ADDS_ADMIN_PASSWORD
 SAFEADMINPASSWORD=$ADDS_SAFEADMIN_PASSWORD
 
 FIRSTBOOT_SCRIPT="replica.cmd"
+
+PRIMARY_DNS="127.0.0.1"
+if [ -z $SECONDARY_DNS ] ; then
+  SECONDARY_DNS=$MASTER_DC_IP
+else
+  echo "You have to have a Active Directory DC as DNS"
+  exit 1
+fi

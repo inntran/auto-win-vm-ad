@@ -1,9 +1,11 @@
 # To be included in make-ad-vm.sh
 
-source $BASEDIR/conf.d/domain.info
+source $BASEDIR/domain.info
 
 netbios=`echo $VM_AD_DOMAIN | sed -e 's/\.//g' | tr '[a-z]' '[A-Z]'`
 VM_NETBIOS_NAME=${VM_NETBIOS_NAME:-"$netbios"}
+PRIMARY_DNS=127.0.0.1
+# SECONDARY_DNS=
 
 VM_NET_INT_BRIDGE="br0"
 VM_NET_EXT_BRIDGE="br1"
@@ -26,6 +28,12 @@ WIN_VM_DATA_DISKFILE=${WIN_VM_DCDATA_DISKFILE:-$VM_DATAIMG_DIR/DATA-$VM_NAME.raw
 ADMINNAME=${ADMINNAME:-Administrator}
 SETUP_PATH=${SETUP_PATH:-"A:"}
 FIRSTBOOT_SCRIPT="postinstall.cmd"
+
+if [ -z $SECONDARY_DNS ] ; then
+  SECONDARY_DNS_STRING="\n            <IpAddress wcm:action=\"add\" wcm:keyValue=\"2\">$SECONDARY_DNS</IpAddress>\n"
+else
+  SECONDARY_DNS_STRING=""
+fi
 
 if [ -z $VM_AD_DOMAIN ] ; then
   echo "Missing Active Directory DOMAIN NAME."

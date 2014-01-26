@@ -10,3 +10,11 @@ ADMINPASSWORD=$ADDS_ADMIN_PASSWORD
 SAFEADMINPASSWORD=$ADDS_SAFEADMIN_PASSWORD
 
 FIRSTBOOT_SCRIPT="newdomain.cmd"
+PRIMARY_DNS="127.0.0.1"
+
+if grep -q MASTER_DC_IP $BASEDIR/domain.info; then
+  grep MASTER_DC_IP $BASEDIR/domain.info
+  sed -i '/MASTER_DC_IP/d' 
+fi
+
+echo "MASTER_DC_IP=$VM_IP" >> $BASEDIR/domain.info
