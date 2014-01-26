@@ -46,9 +46,10 @@ esac
 
 # DISK
 if [ -z DATA_DISKSIZE ] ; then
-  VM_DISKS="--disk path=$WIN_VM_DISKFILE,bus=virtio,size=$VM_DISKSIZE,format=raw,cache=none"
+  VM_DISKS="--disk path=$WIN_VM_DISKFILE,bus=virtio,size=$VM_DISKSIZE,format=raw"
 else
-  VM_DISKS="--disk path=$WIN_VM_DISKFILE,bus=virtio,size=$VM_DISKSIZE,format=raw,cache=none --disk path=$WIN_VM_DATA_DISKFILE,bus=virtio,size=$DATA_DISKSIZE,sparse=true,format=raw,cache=none"
+  VM_DISKS="--disk path=$WIN_VM_DISKFILE,bus=virtio,size=$VM_DISKSIZE,format=raw
+            --disk path=$WIN_VM_DATA_DISKFILE,bus=virtio,size=$DATA_DISKSIZE,format=raw"
 fi
 
 # FLOPPY
@@ -145,7 +146,7 @@ umount $FLOPPY_MNT || { echo error $? from umount $FLOPPY_MNT ; exit 1 ; }
 VI_FLOPPY="--disk path=$ANS_FLOPPY,device=floppy"
 
 virt-install --cpu=host \
-    --name "$VM_NAME" --ram=$VM_RAM --vcpu=$VM_CPUS,cores=2 \
+    --name "$VM_NAME" --ram=$VM_RAM --vcpu=$VM_CPUS \
     --cdrom $WIN_ISO --memballoon none --graphics=vnc --os-variant=win2k8 \
     $VM_DISKS \
     $VI_FLOPPY $VI_EXTRAS_CD \

@@ -8,12 +8,13 @@
           <CreatePartitions>
             <CreatePartition wcm:action="add">
               <Order>1</Order>
-              <Extend>true</Extend>
+              <Size>1</Size>
               <Type>Primary</Type>
             </CreatePartition>
           </CreatePartitions>
           <ModifyPartitions>
             <ModifyPartition wcm:action="add">
+              <Extend>true</Extend>
               <Active>true</Active>
               <Format>NTFS</Format>
               <Label>SYSTEM</Label>
@@ -29,12 +30,13 @@
           <CreatePartitions>
             <CreatePartition wcm:action="add">
               <Order>1</Order>
-              <Extend>true</Extend>
+              <Size>1</Size>
               <Type>Primary</Type>
             </CreatePartition>
           </CreatePartitions>
           <ModifyPartitions>
             <ModifyPartition wcm:action="add">
+              <Extend>true</Extend>
               <Active>false</Active>
               <Format>NTFS</Format>
               <Label>DATA</Label>
