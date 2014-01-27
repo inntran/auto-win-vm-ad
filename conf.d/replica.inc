@@ -12,9 +12,17 @@ SAFEADMINPASSWORD=$ADDS_SAFEADMIN_PASSWORD
 FIRSTBOOT_SCRIPT="replica.cmd"
 
 PRIMARY_DNS="127.0.0.1"
+
 if [ -z $SECONDARY_DNS ] ; then
   SECONDARY_DNS=$MASTER_DC_IP
 else
   echo "You have to have a Active Directory DC as DNS"
   exit 1
 fi
+
+if grep -q SECONDARY_DC_IP $BASEDIR/domain.info; then
+  grep SECONDARY_DC_IP $BASEDIR/domain.info
+  sed -i '/SECONDARY_DC_IP/d' $BASEDIR/domain.info
+fi
+
+echo "SECONDARY_DC_IP=$VM_IP" >> $BASEDIR/domain.info

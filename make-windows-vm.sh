@@ -37,13 +37,14 @@ else
   source "$BASEDIR/conf.d/default.inc"
 fi
 
+# SET DNS SERVERS
 if [ ! -z $SECONDARY_DNS ] ; then
   SECONDARY_DNS_STRING="\n            <IpAddress wcm:action=\"add\" wcm:keyValue=\"2\">$SECONDARY_DNS<\/IpAddress>"
 else
   SECONDARY_DNS_STRING=""
 fi
 
-# NETWORK
+# VIRTUAL MACHINE NETWORK
 case $IFACE_COUNT in
   0) VM_NET="" ;;
   1) VM_NET="--network=bridge=$VM_NET_INT_BRIDGE,model=virtio" ;;

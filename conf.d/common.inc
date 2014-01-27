@@ -4,8 +4,8 @@ source $BASEDIR/domain.info
 
 netbios=`echo $VM_AD_DOMAIN | sed -e 's/\.//g' | tr '[a-z]' '[A-Z]'`
 VM_NETBIOS_NAME=${VM_NETBIOS_NAME:-"$netbios"}
-PRIMARY_DNS=127.0.0.1
-# SECONDARY_DNS=
+PRIMARY_DNS=${MASTER_DC_IP:-"127.0.0.1"}
+SECONDARY_DNS=${SECONDARY_DC_IP:-""}
 
 VM_NET_INT_BRIDGE="br0"
 VM_NET_EXT_BRIDGE="br1"
