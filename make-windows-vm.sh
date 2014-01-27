@@ -33,6 +33,24 @@ source $BASEDIR/conf.d/common.inc
 # ROLE SPECIFIC SETTINGS
 if [[ $VM_ROLE =~ newdomain|replica|offlinerootca|iis|offlinepolicyca|issuingca|wsus|adminwks|default ]] ; then
   source "$BASEDIR/conf.d/$VM_ROLE.inc"
+  case $VM_ROLE in
+    "newdomain"|"replica" )
+            UNATTENDED_XML="domainctl.xml"
+            ;;
+    "offlinerootca"|"offlinepolicyca"|"issuingca" )
+            UNATTENDED_XML="certauth.xml"
+            ;;
+    "adminwks"|"default" )
+            UNATTENDED_XML="adclient.xml"
+            ;;
+    "iis" )
+            UNATTENDED_XML="iisaspnet.xml"
+            ;;
+    "wsus" )
+            UNATTENDED_XML="wsus.xml"
+            ;;
+    
+  esac
 else
   echo "Error: Invalid VM role given, loading default settings"
   source "$BASEDIR/conf.d/default.inc"
