@@ -37,6 +37,12 @@ else
   source "$BASEDIR/conf.d/default.inc"
 fi
 
+if [ ! -z $SECONDARY_DNS ] ; then
+  SECONDARY_DNS_STRING="\n            <IpAddress wcm:action=\"add\" wcm:keyValue=\"2\">$SECONDARY_DNS<\/IpAddress>"
+else
+  SECONDARY_DNS_STRING=""
+fi
+
 # NETWORK
 case $IFACE_COUNT in
   0) VM_NET="" ;;

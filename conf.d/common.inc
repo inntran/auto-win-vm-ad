@@ -29,12 +29,6 @@ ADMINNAME=${ADMINNAME:-Administrator}
 SETUP_PATH=${SETUP_PATH:-"A:"}
 FIRSTBOOT_SCRIPT="postinstall.cmd"
 
-if [ -z $SECONDARY_DNS ] ; then
-  SECONDARY_DNS_STRING="\n            <IpAddress wcm:action=\"add\" wcm:keyValue=\"2\">$SECONDARY_DNS<\/IpAddress>\n"
-else
-  SECONDARY_DNS_STRING=""
-fi
-
 if [ -z $VM_AD_DOMAIN ] ; then
   echo "Missing Active Directory DOMAIN NAME."
   exit 1
