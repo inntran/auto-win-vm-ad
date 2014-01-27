@@ -57,7 +57,7 @@ if [ -z $DATA_DISKSIZE ] ; then
   VM_DISKS="--disk path=$WIN_VM_DISKFILE,bus=virtio,size=$VM_DISKSIZE,format=raw"
 else
   VM_DISKS="--disk path=$WIN_VM_DISKFILE,bus=virtio,size=$VM_DISKSIZE,format=raw
-            --disk path=$WIN_VM_DATA_DISKFILE,bus=virtio,size=$DATA_DISKSIZE,format=raw"
+            --disk path=$WIN_VM_DATA_DISKFILE,bus=virtio,size=$DATA_DISKSIZE,cache=none,format=raw"
 fi
 
 # FLOPPY
