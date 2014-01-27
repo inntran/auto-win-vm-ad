@@ -24,6 +24,7 @@ while getopts "n:r:i:h" opt; do
 done
 
 VM_NAME=${VM_NAME:-TESTVM}
+VM_NAME=`echo $VM_NAME|tr '[a-z]' '[A-Z]'`
 VM_ROLE=${VM_ROLE:-default}
 
 # COMMON SETTINGS
