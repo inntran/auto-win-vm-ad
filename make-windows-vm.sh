@@ -137,7 +137,7 @@ for file in $ANS_FILE_DIR/* $ANS_FILE_DIR/$WIN_VER_REL_ARCH/* "$@" ; do
     esac
     case $file in
         *.in) do_subst $file | unix2dos > $outfile || err=$? ;;
-        *) unix2dos -n $file $outfile || err=$? ;;
+        *) unix2dos -q -n $file $outfile || err=$? ;;
     esac
     if [ -n "$err" ] ; then
         echo error $err copying $file to $outfile  ; umount $FLOPPY_MNT ; exit 1
