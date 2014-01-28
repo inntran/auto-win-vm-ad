@@ -140,7 +140,6 @@
           <EnableAdapterDomainNameRegistration>true</EnableAdapterDomainNameRegistration>
           <DisableDynamicUpdate>false</DisableDynamicUpdate>
           <Identifier>Local Area Connection</Identifier>
-          <DNSDomain>@VM_AD_DOMAIN@</DNSDomain>
         </Interface>
       </Interfaces>
     </component>

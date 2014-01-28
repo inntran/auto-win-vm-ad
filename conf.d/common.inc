@@ -27,7 +27,8 @@ WIN_VM_DATA_DISKFILE=${WIN_VM_DCDATA_DISKFILE:-$VM_DATAIMG_DIR/DATA-$VM_NAME.raw
 
 ADMINNAME=${ADMINNAME:-Administrator}
 ADMINPASSWORD=`cat /dev/urandom|tr -dc 'a-zA-Z0-9!@#$%^&'|fold -w 10|head -1`
-echo "Generated PASSWORD for Administrator for this VM (not Domain Administrator) is:\n\t$ADMINPASSWORD"
+echo "Generated PASSWORD for Administrator in VM (not Domain Administrator) is:"
+echo "    $ADMINPASSWORD"
 SETUP_PATH=${SETUP_PATH:-"A:"}
 FIRSTBOOT_SCRIPT="postinstall.cmd"
 

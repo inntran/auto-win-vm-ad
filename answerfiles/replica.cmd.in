@@ -1,5 +1,4 @@
 echo Setup Secondary Domain Controller
 %SystemRoot%\System32\dcpromo.exe /unattend:@SETUP_PATH@\replica.ini > c:\dcinstall.log 2>&1
 del @SETUP_PATH@\newdomain.ini
-del @SETUP_PATH@\autounattend.xml
 %SystemRoot%\System32\shutdown -r -f -t 60 -c "Reboot to complete new domain controller setup."
