@@ -38,7 +38,7 @@ if [[ $VM_ROLE =~ newdomain|replica|offlinerootca|iis|offlinepolicyca|issuingca|
             UNATTENDED_XML="domainctl.xml"
             ;;
     "offlinerootca"|"offlinepolicyca"|"issuingca" )
-            UNATTENDED_XML="certauth.xml"
+            UNATTENDED_XML="standalone.xml"
             ;;
     "adminwks"|"default" )
             UNATTENDED_XML="adclient.xml"
@@ -49,7 +49,9 @@ if [[ $VM_ROLE =~ newdomain|replica|offlinerootca|iis|offlinepolicyca|issuingca|
     "wsus" )
             UNATTENDED_XML="wsus.xml"
             ;;
-    
+    * )
+            UNATTENDED_XML="standalone.xml"
+            ;;
   esac
 else
   echo "Error: Invalid VM role given, loading default settings"
@@ -75,7 +77,7 @@ if [ -z $DATA_DISKSIZE ] ; then
   VM_DISKS="--disk path=$WIN_VM_DISKFILE,bus=virtio,size=$VM_DISKSIZE,format=raw"
 else
   VM_DISKS="--disk path=$WIN_VM_DISKFILE,bus=virtio,size=$VM_DISKSIZE,format=raw
-            --disk path=$WIN_VM_DATA_DISKFILE,bus=virtio,size=$DATA_DISKSIZE,cache=none,format=raw"
+            --disk path=$WIN_VM_DATA_DISKFILE,bus=virtio,size=$DATA_DISKSIZE,format=raw"
 fi
 
 # FLOPPY
@@ -158,7 +160,7 @@ for file in $ANS_FILE_DIR/* $ANS_FILE_DIR/$WIN_VER_REL_ARCH/* "$@" ; do
     if [ ! -f "$file" ] ; then continue ; fi
     err=
     case $file in
-        *$WIN_VER_REL_ARCH.xml*) outfile=$FLOPPY_MNT/autounattend.xml ;;
+        *$UNATTENDED_XML*) outfile=$FLOPPY_MNT/autounattend.xml ;;
         *) outfile=$FLOPPY_MNT/`basename $file .in` ;;
     esac
     case $file in
