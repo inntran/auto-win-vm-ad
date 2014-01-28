@@ -13,7 +13,7 @@ FIRSTBOOT_SCRIPT="replica.cmd"
 
 PRIMARY_DNS=$VM_IP
 
-if [ -z $SECONDARY_DNS ] ; then
+if [ ! -z $SECONDARY_DNS ] ; then
   SECONDARY_DNS=$MASTER_DC_IP
 else
   echo "You have to have a Active Directory DC as DNS"
